@@ -1,18 +1,128 @@
-<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Sonido de animales | Portfolio de Iván</title><link rel="stylesheet" href="estilos.css"></head><body><header class="topbar"><a class="brand" href="index.html"><img src="imagenes/logo.png" alt=""><span>PORTFOLIO DE IVÁN</span></a><nav class="navlinks"><a href="index.html">Portada</a><a href="seleccion.html#sobre-mi">Sobre mí</a><a href="seleccion.html#proyectos">Proyectos</a></nav></header><main class="wrap">
-<section class="panel" style="margin-bottom:24px"><span class="kicker">APP INVENTOR · PROYECTO 2</span><h1>Sonido de animales</h1><p>Esta es la versión web de mi app de App Inventor. Tiene cuatro botones con la foto de un animal: al tocar cada uno suena su sonido real. Probala acá abajo, tal cual funciona en el celular.</p><p><strong>Desarrollador:</strong> Iván Mazza · 3.er año · Informática</p><a class="back" style="margin-top:0" href="seleccion.html">← Volver a los 4 proyectos</a></section>
-<section class="app-demo"><p class="app-titulo">Click aquí y escuche el sonido</p>
-<div class="animal-grid" aria-label="Cuatro animales en una cuadrícula de dos filas y dos columnas">
-<button class="animal-card" data-audio="animales/cebra.mp3" aria-label="Cebra"><img src="animales/cebra.jpg" alt="Cebra"><span>Cebra</span></button>
-<button class="animal-card" data-audio="animales/ciervo.mp3" aria-label="Ciervo"><img src="animales/ciervo.jpg" alt="Ciervo"><span>Ciervo</span></button>
-<button class="animal-card" data-audio="animales/trex.mp3" aria-label="Dinosaurio T-Rex"><img src="animales/trex.jpg" alt="Dinosaurio T-Rex"><span>T-Rex</span></button>
-<button class="animal-card" data-audio="animales/oveja.mp3" aria-label="Cordero"><img src="animales/oveja.jpg" alt="Cordero"><span>Cordero</span></button>
-</div></section>
-<section class="qr-panel"><h2>📲 Abrir en el celular</h2><p>Escaneá este código QR para acceder al proyecto Sonido de Animales.</p><img src="imagenes/qr-sonido-animales.jpg" alt="Código QR de Sonido de Animales" class="qr-img"></section>
-<section class="info-card2"><h2>🧩 Cómo está hecha</h2><p>En App Inventor cada animal es un <strong>Botón</strong> con su imagen y un componente <strong>Sonido</strong> con su archivo de audio. El bloque <em>cuando Botón.Clic → llamar Sonido.Reproducir</em> hace que suene al tocar. Acá la web hace lo mismo con los mismos archivos.</p></section>
-</main><footer>Demostración web para la exposición escolar · 🐾</footer>
-<script>
-const cards=document.querySelectorAll('.animal-card');let actual=null;
-cards.forEach(c=>{const a=new Audio(c.dataset.audio);a.preload='auto';c._a=a;
-a.addEventListener('ended',()=>c.classList.remove('sonando'));
-c.addEventListener('click',()=>{cards.forEach(o=>{if(o!==c){o._a.pause();o._a.currentTime=0;o.classList.remove('sonando')}});c._a.currentTime=0;c._a.play().catch(()=>{});c.classList.add('sonando')})});
-</script><footer class="site-map"><strong>Mapa del sitio</strong><a href="index.html">Portada</a><a href="seleccion.html">Proyectos</a><a href="camara.html">Cámara</a><a href="animales.html">Sonido de animales</a><a href="preguntados.html">Preguntados</a><a href="adivina.html">Adivina el número</a></footer></body></html>
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sonido de animales | Portfolio de Iván</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="index.html"><img src="imagenes/logo.png" alt=""><span>Mi Portfolio</span></a>
+    <nav class="navlinks"><a href="index.html">Portada</a><a href="seleccion.html">Proyectos</a></nav>
+  </header>
+  <main class="wrap">
+    <section class="panel" style="margin-bottom:24px">
+      <span class="kicker">APP INVENTOR · PROYECTO 2</span>
+      <h1>Sonido de animales</h1>
+      <p>Esta es la versión web de mi app de App Inventor. Tocá un animal para ver su imagen y escuchar su sonido.</p>
+    </section>
+
+    <section class="app-demo">
+      <p class="app-titulo">Tocá un animal para escuchar su sonido</p>
+      <div class="animal-grid" aria-label="Cuatro animales en una cuadrícula de dos filas y dos columnas">
+        <button class="animal-card" data-animal="cebra" aria-label="Escuchar cebra">
+          <img alt="Cebra" loading="lazy"><span>Cebra</span>
+        </button>
+        <button class="animal-card" data-animal="ciervo" aria-label="Escuchar ciervo">
+          <img alt="Ciervo" loading="lazy"><span>Ciervo</span>
+        </button>
+        <button class="animal-card" data-animal="trex" aria-label="Escuchar dinosaurio T-Rex">
+          <img alt="Dinosaurio T-Rex" loading="lazy"><span>T-Rex</span>
+        </button>
+        <button class="animal-card" data-animal="oveja" aria-label="Escuchar cordero">
+          <img alt="Cordero" loading="lazy"><span>Cordero</span>
+        </button>
+      </div>
+      <p id="animalStatus" role="status" aria-live="polite" style="color:white;text-align:center;margin:16px 0 0">Elegí un animal.</p>
+    </section>
+
+    <section class="qr-panel">
+      <h2>📲 Abrir en el celular</h2>
+      <p>Escaneá este código QR para acceder al proyecto Sonido de Animales.</p>
+      <img class="qr-img" src="imagenes/qr-sonido-animales.jpg" alt="Código QR del proyecto Sonido de Animales" loading="lazy">
+    </section>
+    <section class="info-card2">
+      <h2>🧩 Cómo está hecha</h2>
+      <p>En App Inventor cada animal es un <strong>botón</strong> con su imagen y un componente de <strong>sonido</strong> con su archivo de audio.</p>
+    </section>
+    <a class="back" href="seleccion.html">← Volver a proyectos</a>
+  </main>
+  <footer class="site-map"><strong>Mapa del sitio</strong><a href="index.html">Portada</a><a href="seleccion.html">Proyectos</a><a href="camara.html">Cámara</a><a href="animales.html">Sonido de animales</a><a href="preguntados.html">Preguntados</a><a href="adivina.html">Adivina el número</a></footer>
+
+  <script>
+    // Intenta primero la ruta junto a la página, luego la copia en la raíz y
+    // finalmente el archivo original del repositorio como respaldo.
+    const repoRaw = 'https://raw.githubusercontent.com/maitenatomadin920-hash/portfolio-ivan/main/';
+    const animalNames = ['cebra', 'ciervo', 'trex', 'oveja'];
+    const makeCandidates = (name, extension) => [
+      new URL(`animales/${name}.${extension}`, document.baseURI).href,
+      new URL(`${name}.${extension}`, document.baseURI).href,
+      `${repoRaw}animales/${name}.${extension}`
+    ];
+
+    document.querySelectorAll('.animal-card').forEach((card) => {
+      const name = card.dataset.animal;
+      const image = card.querySelector('img');
+      const imageSources = makeCandidates(name, 'jpg');
+      let imageIndex = 0;
+      image.onerror = () => {
+        imageIndex += 1;
+        if (imageIndex < imageSources.length) image.src = imageSources[imageIndex];
+        else image.alt = `${card.querySelector('span').textContent}: imagen no disponible`;
+      };
+      image.src = imageSources[imageIndex];
+    });
+
+    const status = document.getElementById('animalStatus');
+    let playingAudio = null;
+    document.querySelectorAll('.animal-card').forEach((card) => {
+      card.addEventListener('click', () => {
+        const name = card.dataset.animal;
+        const label = card.querySelector('span').textContent;
+        const sources = makeCandidates(name, 'mp3');
+        if (playingAudio) {
+          playingAudio.pause();
+          playingAudio.currentTime = 0;
+        }
+        const audio = new Audio();
+        playingAudio = audio;
+        card.classList.add('sonando');
+        let sourceIndex = 0;
+
+        const trySource = () => {
+          if (sourceIndex >= sources.length) {
+            card.classList.remove('sonando');
+            status.textContent = `No se pudo cargar el sonido de ${label}. Revisá la conexión e intentá otra vez.`;
+            return;
+          }
+          let handled = false;
+          const tryNext = () => {
+            if (handled) return;
+            handled = true;
+            sourceIndex += 1;
+            trySource();
+          };
+          audio.onerror = tryNext;
+          audio.src = sources[sourceIndex];
+          audio.load();
+          status.textContent = `Cargando sonido: ${label}…`;
+          const playback = audio.play();
+          if (playback && typeof playback.catch === 'function') playback.catch(tryNext);
+        };
+
+        audio.onended = () => {
+          card.classList.remove('sonando');
+          status.textContent = `Sonido de ${label} reproducido.`;
+        };
+        trySource();
+      });
+    });
+
+    const qr = document.querySelector('.qr-img');
+    if (qr) {
+      qr.onerror = () => { qr.onerror = null; qr.src = `${repoRaw}imagenes/qr-sonido-animales.jpg`; };
+    }
+  </script>
+</body>
+</html>
